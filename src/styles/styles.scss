@@ -1,0 +1,62 @@
+$primary: rgb(52, 88, 185);
+$primaryLight: rgb(135, 168, 228);
+$primaryDark: rgb(23, 50, 102);
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: cursive;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+}
+.navbar {
+  background: $primaryLight;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 0 30px;
+  font-size: 1.5em;
+  font-family: sans-serif;
+
+  a {
+    color: white;
+    text-decoration: none;
+    transition: 0.4s all;
+    &:hover {
+      transform: scale(1.1);
+      letter-spacing: 1.5px;
+    }
+  }
+}
+
+.home {
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  padding: 20px 100px;
+}
+
+.search {
+  width: 100%;
+  height: fit-content;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  padding: 10px 50px;
+
+  label {
+    font-size: 1.5em;
+    margin: 0 20px 0 0;
+  }
+  input {
+    border: 1px solid $primaryLight;
+    padding: 4px 8px;
+    margin: 0 20px 0 0;
+  }
+}
