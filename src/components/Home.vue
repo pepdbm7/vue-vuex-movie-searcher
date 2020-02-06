@@ -15,7 +15,7 @@
       </div>
 
       <!-- details dialog: -->
-      <div class="background__movie__detail" v-if="movieDetails.length > 0">
+      <div class="background__movie__detail" v-if="movieDetails.id">
         <div class="dialog__movie__detail">
           <button class="close__button" @click="closeDetails()">X</button>
           <img

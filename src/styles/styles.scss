@@ -24,6 +24,7 @@ body {
   padding: 0 30px;
   font-size: 1.5em;
   font-family: sans-serif;
+  z-index: 10;
 
   a {
     color: white;
@@ -127,7 +128,7 @@ body {
 }
 
 .background__movie__detail {
-  // position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -135,16 +136,17 @@ body {
   background: rgba(170, 169, 169, 0.733);
   display: flex;
   justify-content: center;
-  align-items: center;
+  z-index: 11;
 }
 .dialog__movie__detail {
   position: relative;
   background: white;
   border-radius: 5px;
   border: 1px solid gray;
-  width: 80%;
+  width: 60%;
   height: fit-content;
   padding: 50px 30px;
+  top: 25vh;
 }
 
 .close__button {
