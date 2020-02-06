@@ -11,11 +11,13 @@ export default new Vuex.Store({
   state: {
     search: "",
     movies: [],
+    detailsMovie: {},
     error: "",
     loading: false
   },
   getters: {
     getCurrentSearch: state => state.search,
+    getDetailsMovie: ({ detailsMovie }) => detailsMovie,
     getMovies: ({ movies }) =>
       JSON.parse(localStorage.getItem("movies")) || movies,
     getError: ({ error }) => error,
@@ -26,28 +28,43 @@ export default new Vuex.Store({
     setSearch(state, payload) {
       state.search = payload;
     },
-    setMovies(state, payload) {
-      state.movies = payload;
-      localStorage.setItem("movies", JSON.stringify(payload));
-    },
     clearSearch: state => {
       state.search = "";
       state.movies = [];
       localStorage.clear();
     },
+
+    //movies:
+    setMovies(state, payload) {
+      state.movies = payload;
+      localStorage.setItem("movies", JSON.stringify(payload));
+    },
     clearMovies: state => {
       state.movies = [];
       localStorage.clear();
     },
+
+    //movie details:
+    setMovieDetails: (state, payload) => {
+      console.log(payload);
+      state.detailsMovie = payload;
+    },
+    clearDetails: state => {
+      state.detailsMovie = {};
+    },
+
     //errors:
     setError: (state, payload) => {
       state.error = payload;
     },
     clearError: state => (state.error = ""),
+
     //loading:
     setLoading: (state, payload) => (state.loading = payload)
   },
   actions: {
+    setSearch: ({ commit }, payload) => commit("setSearch", payload),
+    clearSearch: ({ commit }) => commit("clearSearch"),
     searchMovies: async ({ commit }, payload) => {
       try {
         commit("clearError");
@@ -79,6 +96,10 @@ export default new Vuex.Store({
         commit("setError", err.message);
         commit("setLoading", false);
       }
-    }
+    },
+    setMovieDetails: ({ commit }, payload) => {
+      commit("setMovieDetails", payload);
+    },
+    clearDetails: ({ commit }) => commit("clearDetails")
   }
 });

@@ -126,6 +126,52 @@ body {
   width: 100%;
 }
 
+.background__movie__detail {
+  // position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background: rgba(170, 169, 169, 0.733);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dialog__movie__detail {
+  position: relative;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 80%;
+  height: fit-content;
+  padding: 50px 30px;
+}
+
+.close__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-style: solid;
+  border: 1px solid gray;
+  border-top-right-radius: 5px;
+  padding: 8px 12px;
+  background: white;
+
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.4s all ease;
+  &:hover {
+    background: $primaryLight;
+    color: white;
+  }
+}
+
+.movie__details__image {
+  width: 80%;
+}
+
+// -----------------------------------------------------------------------------
+
 //SPINNER:
 .spinner {
   width: 100%;

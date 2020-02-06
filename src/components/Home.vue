@@ -4,15 +4,30 @@
     <div class="movies__container">
       <p class="error__message" v-if="!isloading && error">{{ error }}</p>
       <spinner v-if="isloading" />
-      <div
-        class="movie"
-        v-for="{ poster_path, title, popularity, vote_average, id } in movies"
-        :key="{ id }"
-        @click="showDetails"
-      >
-        <img class="movie__image" :src="'http://image.tmdb.org/t/p/w185'+poster_path" alt="movie" />
-        <h3 class="movie__title">{{ title }}</h3>
-        <p>{{popularity}} views</p>
+      <div class="movie" v-for="movie in movies" :key="movie.id" @click="showDetails(movie)">
+        <img
+          class="movie__image"
+          :src="movie.poster_path ? 'http://image.tmdb.org/t/p/w185' + movie.poster_path : null"
+          alt="movie"
+        />
+        <h3 class="movie__title">{{ movie.title }}</h3>
+        <p>{{movie.popularity}} views</p>
+      </div>
+
+      <!-- details dialog: -->
+      <div class="background__movie__detail" v-if="movieDetails.length > 0">
+        <div class="dialog__movie__detail">
+          <button class="close__button" @click="closeDetails()">X</button>
+          <img
+            class="movie__details__image"
+            :src="movieDetails.poster_path ? 'http://image.tmdb.org/t/p/w185' + movieDetails.poster_path : null"
+            alt="movie"
+          />
+          <h3 class="movie__title">{{ movieDetails.title }}</h3>
+          <p>{{movieDetails.popularity}} views</p>
+          <p>{{movieDetails.overview}}</p>
+          <p>User Score: {{movieDetails.vote_average}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -26,12 +41,20 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    showDetails(movie) {
+      this.$store.dispatch("setMovieDetails", movie);
+    },
+    closeDetails() {
+      this.$store.dispatch("clearDetails");
+    }
+  },
   computed: {
     ...mapGetters({
       movies: "getMovies",
       error: "getError",
-      isloading: "getLoading"
+      isloading: "getLoading",
+      movieDetails: "getDetailsMovie"
     })
   }
 };

@@ -16,7 +16,7 @@ export default {
   methods: {
     clearSearch() {
       this.search = "";
-      this.$store.commit("clearSearch");
+      this.$store.dispatch("clearSearch");
     }
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
         return this.$store.state.search;
       },
       set: function(newSearch) {
-        this.$store.commit("setSearch", newSearch);
+        this.$store.dispatch("setSearch", newSearch);
         if (newSearch.trim().length)
           this.$store.dispatch("searchMovies", newSearch);
       }
