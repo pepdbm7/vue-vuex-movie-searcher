@@ -2,6 +2,9 @@ $primary: rgb(52, 88, 185);
 $primaryLight: rgb(135, 168, 228);
 $primaryDark: rgb(23, 50, 102);
 
+$phone: 530px;
+$tablet: 800px;
+
 body {
   margin: 0;
   overflow-x: hidden;
@@ -9,43 +12,64 @@ body {
 }
 
 #app {
+  min-height: 100vh;
+  width: 100%;
   position: relative;
-  width: 100vw;
 }
+
+//navbar:
 .navbar {
   background: $primaryLight;
   position: sticky;
   display: flex;
-  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
   height: 80px;
-  padding: 0 30px;
+
+  z-index: 10;
+}
+
+.navbar__content {
+  width: 80%;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 1.5em;
   font-family: sans-serif;
-  z-index: 10;
 
-  a {
-    color: white;
-    text-decoration: none;
+  span,
+  h1 {
     transition: 0.4s all;
-    &:hover {
-      transform: scale(1.1);
-      letter-spacing: 1.5px;
-    }
+    color: white;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: $phone) {
+    font-size: 1.2em;
   }
 }
 
-.home {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+.title {
+  &:hover {
+    transform: scale(1.1);
+    letter-spacing: 1.5px;
+  }
 }
 
+.navbar__cart {
+  &:hover {
+    color: $primaryDark;
+  }
+}
+
+//searcher:
 .search {
-  width: 85%;
+  width: 80%;
+  max-width: 1000px;
   height: fit-content;
   border: 1px solid darkgray;
   border-radius: 5px;
@@ -54,12 +78,19 @@ body {
 
   label {
     font-size: 1.5em;
-    margin: 0 20px 0 0;
+    margin: 0 20px 20px 0;
   }
+
   input {
     border: 1px solid $primaryLight;
-    padding: 4px 8px;
-    margin: 0 20px 0 0;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 0 20px 20px 0;
+    font-size: 1em;
+
+    &:hover {
+      border: 1px solid $primaryDark;
+    }
   }
 }
 
@@ -83,6 +114,15 @@ body {
   }
 }
 
+//movies page:
+.home,
+.cart {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 .error__message {
   color: tomato;
 }
@@ -90,8 +130,10 @@ body {
 .movies__container {
   border: 1px solid darkgray;
   border-radius: 5px;
-  padding: 50px;
   width: 80%;
+  max-width: 1000px;
+  padding: 50px;
+  margin: 20px auto;
   display: flex;
   flex-flow: wrap;
 }
@@ -103,37 +145,71 @@ body {
   width: 18%;
   margin: 20px;
   transition: 0.4s all ease;
-  cursor: pointer;
   &:hover {
-    transform: scale(0.95);
-    opacity: 0.8;
-    box-shadow: 0 0 7px 2px gray;
+    box-shadow: 0 0 12px 2px gray;
+    .movie__more {
+      opacity: 1;
+    }
   }
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: $tablet) {
     width: 35%;
   }
-  @media only screen and (max-width: 450px) {
+  @media only screen and (max-width: $phone) {
     width: 100%;
   }
 }
 
 .movie__title {
-  font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   letter-spacing: 1px;
+  font-weight: 700;
+  color: $primaryDark;
+}
+
+.movie__text {
+  font-size: 0.9;
 }
 
 .movie__image {
   width: 100%;
 }
 
+.movie__more {
+  color: $primary;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.4s all ease;
+  &:hover {
+    font-size: 0.95em;
+  }
+}
+
+.lni-cart {
+  cursor: pointer;
+  font-size: 2em;
+  transition: 0.4s all ease;
+  text-shadow: 3px 3px 5px $primaryDark;
+  &:hover {
+    font-size: 1.8em;
+    color: $primaryLight;
+  }
+}
+
+.in__cart {
+  color: $primaryDark;
+}
+.not__in__cart {
+  color: gray;
+}
+
+//movie detail dialog:
 .background__movie__detail {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100%;
-  background: rgba(170, 169, 169, 0.733);
+  background: rgba(10, 10, 10, 0.86);
   display: flex;
   justify-content: center;
   z-index: 11;
@@ -144,9 +220,14 @@ body {
   border-radius: 5px;
   border: 1px solid gray;
   width: 60%;
+  max-width: 550px;
   height: fit-content;
   padding: 50px 30px;
   top: 25vh;
+
+  @media only screen and (max-width: $phone) {
+    width: 90%;
+  }
 }
 
 .close__button {
@@ -158,10 +239,10 @@ body {
   border-top-right-radius: 5px;
   padding: 8px 12px;
   background: white;
-
   cursor: pointer;
   font-weight: 700;
   transition: 0.4s all ease;
+
   &:hover {
     background: $primaryLight;
     color: white;
@@ -170,6 +251,49 @@ body {
 
 .movie__details__image {
   width: 80%;
+}
+
+//cart page:
+.cart__title {
+  color: $primary;
+}
+
+//footer:
+.footer {
+  background: $primaryLight;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  font-size: 1em;
+  font-family: sans-serif;
+  z-index: 10;
+
+  a {
+    text-decoration: none;
+    color: white;
+    transition: 0.4s all;
+    &:hover {
+      color: $primaryDark;
+    }
+  }
+}
+
+.footer__content {
+  width: 80%;
+  max-width: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2em;
+  font-family: sans-serif;
+}
+
+.footer__social {
+  list-style: none;
 }
 
 // -----------------------------------------------------------------------------
