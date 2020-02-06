@@ -11,6 +11,8 @@ export default new Vuex.Store({
   state: {
     search: "",
     movies: [],
+    currentPage: 1,
+    totalPages: 1,
     detailsMovie: {},
     cartmovies: [],
     error: "",
@@ -20,6 +22,10 @@ export default new Vuex.Store({
     getCurrentSearch: state => state.search,
     getMovies: ({ movies }) =>
       JSON.parse(localStorage.getItem("movies")) || movies,
+    getPagination: ({ currentPage, totalPages }) => ({
+      currentPage,
+      totalPages
+    }),
     getDetailsMovie: ({ detailsMovie }) => detailsMovie,
     getCartMovies: ({ cartmovies }) =>
       JSON.parse(localStorage.getItem("cartmovies")) || cartmovies,
@@ -45,6 +51,18 @@ export default new Vuex.Store({
     clearMovies: state => {
       state.movies = [];
       localStorage.setItem("movies", JSON.stringify([]));
+    },
+
+    //pagination:
+    setPagination: (state, payload) => {
+      state.currentPage = payload.page;
+      state.totalPages = payload.total_pages;
+      localStorage.setItem("currentpage", JSON.stringify(payload.page));
+    },
+    clearPagination: state => {
+      state.currentPage = 1;
+      state.totalPages = 1;
+      localStorage.setItem("currentpage", JSON.stringify(0));
     },
 
     //movie details:
@@ -84,22 +102,26 @@ export default new Vuex.Store({
     setSearch: ({ commit }, payload) => commit("setSearch", payload),
     clearSearch: ({ commit }) => commit("clearSearch"),
     //all movies:
-    searchMovies: async ({ commit }, payload) => {
+    searchMovies: async ({ commit }, { query, requestPage = 1 }) => {
       try {
         commit("clearError");
         commit("clearMovies");
         commit("setLoading", true);
 
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${payload}`
+        const {
+          data: { page, total_pages, results }
+        } = await axios.get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}&page=${requestPage}`
         );
+        debugger;
 
-        if (data.results.length !== 0) {
+        if (results.length) {
+          //intentionally delayed to show spinner longer:
           setTimeout(() => {
-            //to make spinner more visible
-            commit("setMovies", data.results);
-            commit("clearError");
+            commit("setMovies", results);
+            commit("setPagination", { page, total_pages });
             commit("setLoading", false);
+            debugger;
           }, 500);
         } else {
           setTimeout(() => {

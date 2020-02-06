@@ -20,9 +20,10 @@ export default {
         return this.$store.state.search;
       },
       set: function(newSearch) {
+        const searchParams = { query: newSearch, requestPage: 1 };
         this.$store.dispatch("setSearch", newSearch);
         if (newSearch.trim().length)
-          this.$store.dispatch("searchMovies", newSearch);
+          this.$store.dispatch("searchMovies", searchParams);
       }
     }
   }

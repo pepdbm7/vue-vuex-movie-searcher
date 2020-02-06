@@ -121,6 +121,7 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding-bottom: 150px;
 }
 
 .error__message {
@@ -135,6 +136,7 @@ body {
   padding: 50px;
   margin: 20px auto;
   display: flex;
+  justify-content: center;
   flex-flow: wrap;
 }
 
@@ -180,7 +182,7 @@ body {
   opacity: 0;
   transition: 0.4s all ease;
   &:hover {
-    font-size: 0.95em;
+    color: $primaryLight;
   }
 }
 
@@ -200,6 +202,26 @@ body {
 }
 .not__in__cart {
   color: gray;
+}
+
+//pagination:
+.pagination {
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    border-style: solid;
+    border: 1px solid $primaryLight;
+    &:hover {
+      box-shadow: 0 0 4px $primary;
+    }
+  }
 }
 
 //movie detail dialog:

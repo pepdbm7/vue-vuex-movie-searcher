@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <!-- pagination: -->
+    <pagination v-if="movies.length > 0" />
     <div class="movies__container">
       <p class="error__message" v-if="!isloading && error">{{ error }}</p>
       <spinner v-if="isloading" />
@@ -55,7 +57,8 @@ export default {
       movies: "getMovies",
       error: "getError",
       isloading: "getLoading",
-      cartmovies: "getCartMovies"
+      cartmovies: "getCartMovies",
+      currentPage: "getPagination"
     })
   }
 };

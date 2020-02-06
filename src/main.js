@@ -11,6 +11,7 @@ import Movies from "./components/Movies.vue";
 import Spinner from "./components/Spinner.vue";
 import Footer from "./components/Footer.vue";
 import ClearButton from "./components/ClearButton.vue";
+import Pagination from "./components/Pagination.vue";
 
 Vue.config.productionTip = false;
 
@@ -22,6 +23,7 @@ Vue.component("details-movie", MovieDetails);
 Vue.component("spinner", Spinner);
 Vue.component("myfooter", Footer);
 Vue.component("clear-button", ClearButton);
+Vue.component("pagination", Pagination);
 
 new Vue({
   router,
