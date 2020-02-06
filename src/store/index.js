@@ -16,9 +16,10 @@ export default new Vuex.Store({
   },
   getters: {
     getCurrentSearch: state => state.search,
-    getMovies: ({ movies }) => movies,
+    getMovies: ({ movies }) =>
+      JSON.parse(localStorage.getItem("movies")) || movies,
     getError: ({ error }) => error,
-    loading: ({ loading }) => loading
+    getLoading: ({ loading }) => loading
   },
   mutations: {
     //search:
@@ -27,10 +28,16 @@ export default new Vuex.Store({
     },
     setMovies(state, payload) {
       state.movies = payload;
+      localStorage.setItem("movies", JSON.stringify(payload));
     },
     clearSearch: state => {
       state.search = "";
       state.movies = [];
+      localStorage.clear();
+    },
+    clearMovies: state => {
+      state.movies = [];
+      localStorage.clear();
     },
     //errors:
     setError: (state, payload) => {
@@ -42,9 +49,9 @@ export default new Vuex.Store({
   },
   actions: {
     searchMovies: async ({ commit }, payload) => {
-      debugger;
       try {
         commit("clearError");
+        commit("clearMovies");
         commit("setLoading", true);
 
         const { data } = await axios.get(
@@ -52,10 +59,12 @@ export default new Vuex.Store({
         );
 
         if (data.results.length !== 0) {
-          debugger;
-          commit("setMovies", data.results);
-          commit("clearError");
-          commit("setLoading", false);
+          setTimeout(() => {
+            //to make spinner more visible
+            commit("setMovies", data.results);
+            commit("clearError");
+            commit("setLoading", false);
+          }, 500);
         } else {
           setTimeout(() => {
             commit("clearError");
@@ -64,6 +73,9 @@ export default new Vuex.Store({
           commit("setLoading", false);
         }
       } catch (err) {
+        setTimeout(() => {
+          commit("clearError");
+        }, 1500);
         commit("setError", err.message);
         commit("setLoading", false);
       }

@@ -1,9 +1,9 @@
 <template>
   <form class="search">
-    <label>Search movie: </label>
+    <label>Search movie:</label>
     <input type="text" v-model="search" autofocus placeholder="Write here..." />
 
-    <button v-if="search" @click="clearSearch">Clear</button>
+    <button class="clear__button" @click="clearSearch">Clear</button>
   </form>
 </template>
 
@@ -27,7 +27,7 @@ export default {
       },
       set: function(newSearch) {
         this.$store.commit("setSearch", newSearch);
-        if (newSearch.trim().length > 1)
+        if (newSearch.trim().length)
           this.$store.dispatch("searchMovies", newSearch);
       }
     }
