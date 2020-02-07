@@ -1,11 +1,11 @@
 {
-  "name": "mytheresa_vuex-movie-searcher",
+  "name": "vuex-movie-searcher",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",

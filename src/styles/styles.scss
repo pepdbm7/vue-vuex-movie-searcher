@@ -152,7 +152,7 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-bottom: 85px;
+  padding-bottom: 110px;
 }
 
 .sort__button {
@@ -177,6 +177,13 @@ body {
   display: flex;
   justify-content: center;
   flex-flow: wrap;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 70%,
+    $primaryLight 100%
+  );
+  box-shadow: 0 0 23px -5px $primary;
 }
 
 .movie {
@@ -187,6 +194,8 @@ body {
   margin: 20px;
   transition: 0.4s all ease;
   display: grid;
+  background: white;
+
   &:hover {
     box-shadow: 0 0 12px 2px gray;
     .movie__more {
