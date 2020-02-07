@@ -102,7 +102,10 @@ export default new Vuex.Store({
     setSearch: ({ commit }, payload) => commit("setSearch", payload),
     clearSearch: ({ commit }) => commit("clearSearch"),
     //all movies:
-    searchMovies: async ({ commit }, { query, requestPage = 1 }) => {
+    searchMovies: async (
+      { commit, state },
+      { query = state.search, requestPage = 1 }
+    ) => {
       try {
         commit("clearError");
         commit("clearMovies");
@@ -113,7 +116,7 @@ export default new Vuex.Store({
         } = await axios.get(
           `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}&page=${requestPage}`
         );
-        debugger;
+        // debugger;
 
         if (results.length) {
           //intentionally delayed to show spinner longer:
@@ -121,7 +124,7 @@ export default new Vuex.Store({
             commit("setMovies", results);
             commit("setPagination", { page, total_pages });
             commit("setLoading", false);
-            debugger;
+            // debugger;
           }, 500);
         } else {
           setTimeout(() => {

@@ -9,6 +9,29 @@ body {
   margin: 0;
   overflow-x: hidden;
   font-family: cursive;
+
+  .btn {
+    box-shadow: 0 0 4px $primary;
+    padding: 8px 12px;
+    color: $primary;
+    background: white;
+    border: 1px solid $primary;
+    border-radius: 5px;
+    transition: 0.4s all;
+    cursor: pointer;
+
+    &:hover {
+      background: $primaryLight;
+      color: white;
+      transform: scale(0.95);
+    }
+  }
+
+  .disabled__button {
+    pointer-events: none;
+    cursor: default;
+    border: none;
+  }
 }
 
 #app {
@@ -95,23 +118,9 @@ body {
 }
 
 .clear__button {
-  border-radius: 5px;
-  box-shadow: 0 0 4px $primary;
-  padding: 8px 12px;
   margin: 0 auto 50px;
-  border: 1px solid $primary;
-  transition: 0.4s all;
   font-weight: 700;
-  color: $primary;
-  background: white;
   font-size: 1em;
-  cursor: pointer;
-
-  &:hover {
-    background: $primaryLight;
-    color: white;
-    transform: scale(0.95);
-  }
 }
 
 //movies page:
@@ -212,16 +221,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  button {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    border-style: solid;
-    border: 1px solid $primaryLight;
-    &:hover {
-      box-shadow: 0 0 4px $primary;
-    }
-  }
 }
 
 //movie detail dialog:
@@ -256,18 +255,13 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  border-style: solid;
-  border: 1px solid gray;
-  border-top-right-radius: 5px;
-  padding: 8px 12px;
-  background: white;
-  cursor: pointer;
   font-weight: 700;
-  transition: 0.4s all ease;
+  border-radius: 0 5px 0 0 !important;
 
   &:hover {
     background: $primaryLight;
     color: white;
+    transform: scale(1.1) !important;
   }
 }
 

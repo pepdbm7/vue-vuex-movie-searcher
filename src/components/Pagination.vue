@@ -1,10 +1,10 @@
 <template>
   <div class="pagination">
-    <button :disabled="disabledPrev()" @click="prevPage()">
+    <button :class="disabledPrev" @click="prevPage">
       &laquo; Previous
     </button>
     <div>{{ pagination.currentPage }} / {{ pagination.totalPages }}</div>
-    <button :disabled="disabledNext()" @click="nextPage()">
+    <button :class="disabledNext" @click="nextPage">
       Next &raquo;
     </button>
   </div>
@@ -24,23 +24,27 @@ export default {
       pagination: "getPagination"
     }),
     disabledPrev() {
-      return this.pagination && this.pagination.currentPage === 1;
+      return this.pagination && this.pagination.currentPage === 1
+        ? "btn disabled__button"
+        : "btn";
     },
     disabledNext() {
-      return (
-        this.pagination &&
+      return this.pagination &&
         this.pagination.currentPage === this.pagination.totalPages
-      );
-    },
+        ? "btn disabled__button"
+        : "btn";
+    }
+  },
+  methods: {
     prevPage() {
       const prevPage = this.pagination.currentPage - 1;
-      const searchParams = { query: search, requestPage: prevPage };
+      const searchParams = { query: this.search, requestPage: prevPage };
       this.$store.dispatch("searchMovies", searchParams);
     },
-    nexPage() {
+    nextPage() {
       const nexPage = this.pagination.currentPage + 1;
       const searchParams = {
-        query: search,
+        query: this.search,
         requestPage: nexPage
       };
       this.$store.dispatch("searchMovies", searchParams);

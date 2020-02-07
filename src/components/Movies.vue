@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- pagination: -->
-    <pagination v-if="movies.length > 0" />
+    <pagination />
     <div class="movies__container">
       <p class="error__message" v-if="!isloading && error">{{ error }}</p>
       <spinner v-if="isloading" />

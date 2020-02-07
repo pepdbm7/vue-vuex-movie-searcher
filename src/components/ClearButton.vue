@@ -1,5 +1,5 @@
 <template>
-  <button class="clear__button" @click="clear">{{ message }}</button>
+  <button class="btn clear__button" @click="clear">{{ message }}</button>
 </template>
 
 <script>

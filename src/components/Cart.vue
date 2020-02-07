@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <h2 class="cart__title">Find here the movies you are interested about</h2>
-    <clear-button :whatToClear="'cart'" />
+    <clear-button v-if="cartmovies.length" :whatToClear="'cart'" />
     <div class="movies__container">
       <p class="error__message" v-if="!isloading && error">{{ error }}</p>
       <spinner v-if="isloading" />

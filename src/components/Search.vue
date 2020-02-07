@@ -3,7 +3,7 @@
     <label>Search movie:</label>
     <input type="text" v-model="search" autofocus placeholder="Write here..." />
 
-    <clear-button v-if="search" :whatToClear="'search'" />
+    <clear-button :whatToClear="'search'" />
   </form>
 </template>
 
