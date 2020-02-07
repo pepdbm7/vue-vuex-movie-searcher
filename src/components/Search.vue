@@ -14,7 +14,7 @@ export default {
     return {};
   },
   computed: {
-    //setting and getting input directly to/from global state:
+    //setting and getting on input change:
     search: {
       get: function() {
         return this.$store.state.search;

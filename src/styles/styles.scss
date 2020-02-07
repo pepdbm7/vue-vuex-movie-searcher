@@ -79,13 +79,36 @@ body {
 .title {
   &:hover {
     transform: scale(1.1);
-    letter-spacing: 1.5px;
+    letter-spacing: 2.5px;
   }
 }
 
 .navbar__cart {
+  transition: 0.4s all ease;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  cursor: pointer;
+
+  i {
+    font-size: 2em;
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 60px;
+    background: $primary;
+    padding: 5px 10px;
+    height: fit-content;
+  }
   &:hover {
     color: $primaryDark;
+    transform: scale(1.1);
+    span {
+      color: $primaryDark;
+      border: 1px solid $primaryDark;
+    }
   }
 }
 
@@ -112,7 +135,7 @@ body {
     font-size: 1em;
 
     &:hover {
-      border: 1px solid $primaryDark;
+      border: 1px solid $primary;
     }
   }
 }
@@ -126,15 +149,22 @@ body {
 //movies page:
 .home,
 .cart {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-bottom: 150px;
+  padding-bottom: 85px;
+}
+
+.sort__button {
+  width: fit-content;
+  margin: 10px auto;
 }
 
 .error__message {
   color: tomato;
+  font-size: 16px;
+  min-height: 24px;
+  margin: 0 auto;
 }
 
 .movies__container {
@@ -156,6 +186,7 @@ body {
   width: 18%;
   margin: 20px;
   transition: 0.4s all ease;
+  display: grid;
   &:hover {
     box-shadow: 0 0 12px 2px gray;
     .movie__more {
@@ -195,14 +226,13 @@ body {
   }
 }
 
-.lni-cart {
+.lni-cart.movie_icon {
   cursor: pointer;
   font-size: 2em;
   transition: 0.4s all ease;
-  text-shadow: 3px 3px 5px $primaryDark;
+  margin: auto auto 5px;
   &:hover {
-    font-size: 1.8em;
-    color: $primaryLight;
+    opacity: 0.4;
   }
 }
 
@@ -215,7 +245,7 @@ body {
 
 //pagination:
 .pagination {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   height: 50px;
   display: flex;
@@ -283,7 +313,8 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 120px;
+  height: fit-content;
+  padding: 20px 0;
   font-size: 1em;
   font-family: sans-serif;
   z-index: 10;
@@ -291,9 +322,12 @@ body {
   a {
     text-decoration: none;
     color: white;
+    font-size: 1.5em;
+    line-height: 30px;
     transition: 0.4s all;
     &:hover {
       color: $primaryDark;
+      transform: scale(1.1);
     }
   }
 }
@@ -306,10 +340,22 @@ body {
   justify-content: space-between;
   font-size: 1.2em;
   font-family: sans-serif;
+
+  @media only screen and (max-width: $phone) {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 .footer__social {
   list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+
+  li {
+    margin: 0 1rem;
+  }
 }
 
 // -----------------------------------------------------------------------------

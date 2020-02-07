@@ -1,9 +1,17 @@
 <template>
   <div class="home">
     <!-- pagination: -->
-    <pagination />
+
+    <button
+      v-if="query.length && movies.length && !isSorted"
+      class="btn sort__button"
+      @click="sort"
+    >
+      Sort by Genre
+    </button>
+    <p class="error__message">{{ error }}</p>
     <div class="movies__container">
-      <p class="error__message" v-if="!isloading && error">{{ error }}</p>
+      <pagination />
       <spinner v-if="isloading" />
       <div class="movie" v-for="movie in movies" :key="movie.id">
         <img
@@ -16,14 +24,15 @@
           alt="movie"
         />
         <h3 class="movie__title">{{ movie.title }}</h3>
-        <p class="movie__text">{{ movie.popularity }} views</p>
+        <p class="movie__text"><span>Genre: </span> {{ movie.genre_ids }}</p>
         <p class="movie__more" @click="showDetails(movie)">Read more...</p>
         <i
-          class="lni-cart"
+          class="lni-cart movie_icon"
           @click="addToCart(movie)"
           v-bind:class="isInCart(movie.id)"
         />
       </div>
+      <pagination />
 
       <!-- details dialog: -->
       <details-movie />
@@ -39,6 +48,17 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapGetters({
+      movies: "getMovies",
+      error: "getError",
+      isloading: "getLoading",
+      cartmovies: "getCartMovies",
+      currentPage: "getPagination",
+      query: "getCurrentSearch",
+      isSorted: "getIsSorted"
+    })
+  },
   methods: {
     showDetails(movie) {
       this.$store.dispatch("setMovieDetails", movie);
@@ -48,18 +68,17 @@ export default {
     },
     isInCart(id) {
       const inCart = this.cartmovies.findIndex(movie => movie.id === id) > -1;
-      // console.log(inCart);
+
       return inCart ? "in__cart" : "not__in__cart ";
+    },
+    sort() {
+      const searchParams = {
+        query: this.query,
+        requestPage: this.currentPage,
+        sortedByGenre: true
+      };
+      this.$store.dispatch("searchMovies", searchParams);
     }
-  },
-  computed: {
-    ...mapGetters({
-      movies: "getMovies",
-      error: "getError",
-      isloading: "getLoading",
-      cartmovies: "getCartMovies",
-      currentPage: "getPagination"
-    })
   }
 };
 </script>

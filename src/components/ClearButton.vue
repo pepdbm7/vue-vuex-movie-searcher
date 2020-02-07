@@ -1,5 +1,7 @@
 <template>
-  <button class="btn clear__button" @click="clear">{{ message }}</button>
+  <button class="btn clear__button" v-on:click.stop.prevent="clear">
+    {{ message }}
+  </button>
 </template>
 
 <script>

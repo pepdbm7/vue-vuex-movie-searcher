@@ -18,8 +18,9 @@
         <h3 class="movie__title">{{ movie.title }}</h3>
         <p>{{ movie.popularity }} views</p>
         <p class="movie__more" @click="showDetails(movie)">Read more...</p>
+
         <i
-          class="lni-cart"
+          class="lni-cart movie_icon"
           @click="removeFromCart(movie.id)"
           v-bind:class="isInCart(movie.id)"
         />
@@ -38,6 +39,13 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapGetters({
+      error: "getError",
+      isloading: "getLoading",
+      cartmovies: "getCartMovies"
+    })
+  },
   methods: {
     showDetails(movie) {
       this.$store.dispatch("setMovieDetails", movie);
@@ -47,16 +55,8 @@ export default {
     },
     isInCart(id) {
       const inCart = this.cartmovies.findIndex(movie => movie.id === id) > -1;
-      // console.log(inCart);
       return inCart ? "in__cart" : "not__in__cart ";
     }
-  },
-  computed: {
-    ...mapGetters({
-      error: "getError",
-      isloading: "getLoading",
-      cartmovies: "getCartMovies"
-    })
   }
 };
 </script>

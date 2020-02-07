@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import genres from "../data/genres";
 require("dotenv").config();
 
 Vue.use(Vuex);
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   state: {
     search: "",
     movies: [],
+    isSorted: false,
     currentPage: 1,
     totalPages: 1,
     detailsMovie: {},
@@ -22,13 +24,16 @@ export default new Vuex.Store({
     getCurrentSearch: state => state.search,
     getMovies: ({ movies }) =>
       JSON.parse(localStorage.getItem("movies")) || movies,
+    getIsSorted: ({ isSorted }) => isSorted,
     getPagination: ({ currentPage, totalPages }) => ({
       currentPage,
       totalPages
     }),
     getDetailsMovie: ({ detailsMovie }) => detailsMovie,
-    getCartMovies: ({ cartmovies }) =>
-      JSON.parse(localStorage.getItem("cartmovies")) || cartmovies,
+    getCartMovies: ({ cartmovies }) => {
+      cartmovies = JSON.parse(localStorage.getItem("cartmovies"));
+      return cartmovies;
+    },
     getError: ({ error }) => error,
     getLoading: ({ loading }) => loading
   },
@@ -40,6 +45,7 @@ export default new Vuex.Store({
     clearSearch: state => {
       state.search = "";
       state.movies = [];
+      state.cartmovies = JSON.parse(localStorage.getItem("cartmovies"));
       localStorage.setItem("movies", JSON.stringify([]));
     },
 
@@ -52,6 +58,7 @@ export default new Vuex.Store({
       state.movies = [];
       localStorage.setItem("movies", JSON.stringify([]));
     },
+    setIsSorted: (state, payload) => (state.isSorted = payload),
 
     //pagination:
     setPagination: (state, payload) => {
@@ -104,7 +111,7 @@ export default new Vuex.Store({
     //all movies:
     searchMovies: async (
       { commit, state },
-      { query = state.search, requestPage = 1 }
+      { query = state.search, requestPage = 1, sortedByGenre = false }
     ) => {
       try {
         commit("clearError");
@@ -116,15 +123,28 @@ export default new Vuex.Store({
         } = await axios.get(
           `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}&page=${requestPage}`
         );
-        // debugger;
 
         if (results.length) {
+          const moviesWithGenreName = await results.map(movie => {
+            const firstIDGenre = movie.genre_ids.length
+              ? movie.genre_ids[0]
+              : 0;
+            movie.genre_ids = genres[firstIDGenre];
+            return movie;
+          });
+
+          const sorted = sortedByGenre
+            ? await moviesWithGenreName.sort((a, b) =>
+                a.genre_ids[0] > b.genre_ids[0] ? 1 : -1
+              )
+            : null;
+
           //intentionally delayed to show spinner longer:
           setTimeout(() => {
-            commit("setMovies", results);
+            commit("setIsSorted", !!sorted);
+            commit("setMovies", sorted || moviesWithGenreName);
             commit("setPagination", { page, total_pages });
             commit("setLoading", false);
-            // debugger;
           }, 500);
         } else {
           setTimeout(() => {
@@ -151,19 +171,24 @@ export default new Vuex.Store({
       try {
         commit("clearError");
         commit("setLoading", true);
+        //getting cartmovies from storage if there are:
+        const cartmoviesInStorage =
+          JSON.parse(localStorage.getItem("cartmovies")) !== null
+            ? JSON.parse(localStorage.getItem("cartmovies"))
+            : [];
+
+        state.cartmovies = cartmoviesInStorage;
+
         const alreadyInCart =
           (await state.cartmovies.findIndex(movie => movie.id === payload.id)) >
           -1;
 
         if (alreadyInCart) {
-          setTimeout(() => {
-            commit("clearError");
-          }, 1500);
-          commit("setError", "Already in cart!");
+          commit("removeFromCart", payload.id);
           commit("setLoading", false);
         } else {
-          commit("setLoading", false);
           commit("addToCart", payload);
+          commit("setLoading", false);
         }
       } catch (err) {
         setTimeout(() => {

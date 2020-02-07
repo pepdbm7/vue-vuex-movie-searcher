@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      search: "getCurrentSearch",
+      query: "getCurrentSearch",
       pagination: "getPagination"
     }),
     disabledPrev() {
@@ -38,13 +38,13 @@ export default {
   methods: {
     prevPage() {
       const prevPage = this.pagination.currentPage - 1;
-      const searchParams = { query: this.search, requestPage: prevPage };
+      const searchParams = { query: this.query, requestPage: prevPage };
       this.$store.dispatch("searchMovies", searchParams);
     },
     nextPage() {
       const nexPage = this.pagination.currentPage + 1;
       const searchParams = {
-        query: this.search,
+        query: this.query,
         requestPage: nexPage
       };
       this.$store.dispatch("searchMovies", searchParams);
