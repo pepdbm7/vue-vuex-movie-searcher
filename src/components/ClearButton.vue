@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "search",
+  name: "clear-button",
   props: ["whatToClear"],
   data() {
     return {};
