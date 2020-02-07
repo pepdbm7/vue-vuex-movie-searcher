@@ -129,7 +129,7 @@ export default new Vuex.Store({
         } = await axios.get(
           `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}&page=${requestPage}`
         );
-
+        debugger;
         if (results.length) {
           const moviesWithGenreName = await results.map(movie => {
             const firstIDGenre = movie.genre_ids.length

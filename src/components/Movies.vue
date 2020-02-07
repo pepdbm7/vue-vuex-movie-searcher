@@ -54,7 +54,7 @@ export default {
       error: "getError",
       isloading: "getLoading",
       cartmovies: "getCartMovies",
-      currentPage: "getPagination",
+      pagination: "getPagination",
       query: "getCurrentSearch",
       isSorted: "getIsSorted"
     })
@@ -74,7 +74,7 @@ export default {
     sort() {
       const searchParams = {
         query: this.query,
-        requestPage: this.currentPage,
+        requestPage: this.pagination.currentPage,
         sortedByGenre: true
       };
       this.$store.dispatch("searchMovies", searchParams);

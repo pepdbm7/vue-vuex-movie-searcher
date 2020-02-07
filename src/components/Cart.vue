@@ -2,7 +2,7 @@
   <div class="cart">
     <h2 class="cart__title">Find here the movies you are interested about</h2>
     <clear-button v-if="cartmovies.length" :whatToClear="'cart'" />
-    <div class="movies__container">
+    <div v-if="cartmovies.length" class="movies__container">
       <p class="error__message" v-if="!isloading && error">{{ error }}</p>
       <spinner v-if="isloading" />
       <div class="movie" v-for="movie in cartmovies" :key="movie.id">
