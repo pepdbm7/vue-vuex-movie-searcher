@@ -31,7 +31,13 @@ export default new Vuex.Store({
     }),
     getDetailsMovie: ({ detailsMovie }) => detailsMovie,
     getCartMovies: ({ cartmovies }) => {
-      cartmovies = JSON.parse(localStorage.getItem("cartmovies"));
+      const cartmoviesInStorage =
+        JSON.parse(localStorage.getItem("cartmovies")) !== null
+          ? JSON.parse(localStorage.getItem("cartmovies"))
+          : [];
+
+      cartmovies = cartmoviesInStorage;
+
       return cartmovies;
     },
     getError: ({ error }) => error,
